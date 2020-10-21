@@ -18,6 +18,9 @@ class CriarTabelaPedidoProduto extends Migration
 
             $table->unsignedInteger('pedido');
             $table->unsignedInteger('produto');
+
+            $table->string('cod_produto');
+            $table->integer('nome');
             $table->integer('quantidade');
             $table->float('valor_vendido', 8, 2);
 

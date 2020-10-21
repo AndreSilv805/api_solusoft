@@ -56,13 +56,13 @@ class ProdutosController extends Controller
             $cores = $request->cores;
 
             foreach($cores as $cor){
-            $prod->cores()->create(['nome'=>$cor, 'value'=>$cor, 'text'=>$cor, ]);
+            $prod->coress()->create(['nome'=>$cor, 'value'=>$cor, 'text'=>$cor, ]);
             }
 
             $tamanhos = $request->tamanhos;
 
             foreach($tamanhos as $tamanho){
-                $prod->tamanhos()->create(['nome'=>$tamanho, 'value'=>$tamanho, 'text'=>$tamanho,]);
+                $prod->tamanhoss()->create(['nome'=>$tamanho, 'value'=>$tamanho, 'text'=>$tamanho,]);
             }
 
             $coresvariacao = Cor::where('produto_id','=',$prod->id)->get();
@@ -74,6 +74,7 @@ class ProdutosController extends Controller
                     $cor->tamanhos()->attach($tam->id,['produto'=>$prod->id, 'nome'=>$cor->nome."/".$tam->nome]);
                 }
             }
+
 
             // $prod->cores()->delete();
 
@@ -141,7 +142,7 @@ class ProdutosController extends Controller
 
             $coresvariacao = Cor::where('produto_id','=',$produto->id)->get();
             $tamanhosvariacao = Tamanho::where('produto_id','=',$produto->id)->get();
-            $variacoes = Variation::where('produto','=',$produto->id)->get();
+            //$variacoes = Variation::where('produto','=',$produto->id)->get();
 
             ///// CRIADOR DE VARIAÇÕES
 

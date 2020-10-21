@@ -41,7 +41,7 @@ class ClientesController extends Controller
      */
     public function show($id)
     {
-        return Cleinte::findOrFail($id);
+        return Cliente::findOrFail($id);
     }
 
     /**
@@ -53,7 +53,7 @@ class ClientesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $cliente = Produto::findOrFail($id);
+        $cliente = Cliente::findOrFail($id);
 
         $cliente -> update($request->all());
     }
@@ -70,26 +70,5 @@ class ClientesController extends Controller
         $cliente -> delete();
     }
 
-    public function cores()
-    {
-        //$cor = Cor::findOrFail(1);
-        $prod = Produto::findOrFail(1);
-        $cores = Cor::where('produto_id','=',$prod->id)->get();
-        $tamanhos = Tamanho::where('produto_id','=',$prod->id)->get();
-        $vari = Variation::all();
-        $vari -> destroy();
-        //$variations = Variation::all();
-        ///// CRIADOR DE VARIAÇÕES
-        foreach ($cores as $cor){
-            foreach ($tamanhos as $tam) {
-                $cor->tamanhos()->attach($tam->id);
-            }
-        }
-        //$cor->tamanhos()->attach(1);
-        //return $cor = Produto::with('cores')->find(1);
-        //return $pedidos = Cliente::all();
-        //$pedidos = Cliente::all();
-        //dd($pedidos);
-        return $cores;
-    }
+
 }

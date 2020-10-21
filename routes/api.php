@@ -23,7 +23,10 @@ Route::apiResource('produtos', 'Api\ProdutosController');
 
 Route::apiResource('clientes', 'Api\ClientesController');
 
-Route::get('pedidos/pdf', 'Api\PedidosController@pdf');
+Route::put('pedidos/{id}/add', 'Api\PedidosController@adicionar');
+Route::delete('pedidos/remover/{id}', 'Api\PedidosController@remove');
+Route::get('pedidos/pdf/{id}', 'Api\PedidosController@pdf');
+Route::get('pedidos/email/{id}', 'Api\PedidosController@email');
 Route::apiResource('pedidos', 'Api\PedidosController');
 
 

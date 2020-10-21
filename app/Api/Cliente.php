@@ -8,8 +8,6 @@ class Cliente extends Model
 {
     protected $table = 'clientes';
 
-    protected $with = ['pedidos'];
-
     protected $fillable = [
         'cod_cliente', 'nome', 'cpf', 'sexo', 'email',
     ];

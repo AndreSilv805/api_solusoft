@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Api\Pedido;
+use App\Api\ItemPedido;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use PDF;
 
 class PedidosController extends Controller
@@ -19,6 +21,7 @@ class PedidosController extends Controller
 
     public function index()
     {
+
         return Pedido::all();
     }
 
@@ -30,7 +33,7 @@ class PedidosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Pedido::create();
     }
 
     /**
@@ -83,10 +86,52 @@ class PedidosController extends Controller
         //$produto -> update($request->all());
     }
 
-    public function pdf(){
-
-        $pdf = PDF::loadView('pdf');
+    public function pdf($id){
+        $pedido = Pedido::findOrFail($id);
+        $pdf = PDF::loadView('pdf', compact('pedido'));
         return $pdf->setPaper('a4')->stream('teste pdf');
+
+    }
+
+    public function adicionar(Request $request, $id){
+
+        $pedido = Pedido::findOrFail($id);
+        /*$prod = [
+            'cod_produto' => $request->cod_produto,
+            'nome' => $request->nome,
+            'valor'=> $request->valor,
+            'cores'=> implode(",",$request->cores),
+            'tamanhos'=> implode(",",$request->tamanhos)
+        ];*/
+        $prod = [
+            'cod_produto' => $request->cod_produto,
+            'nome' => $request->nome,
+            'quantidade' => $request->quantidade,
+            'valor_vendido' => $request->valor
+        ];
+
+        //$quantity  = $quantity ?? 1;
+        $pedido->produtos()->attach($request->id,$prod);
+        //$pedido->produtos()->attach($request->id,['nome'=>$request->nome, 'quantidade' => $request->quantidade, 'valor_vendido' => $request->valor]);
+        //return "Produto adicionado";
+        //$pedido->addProduct($product_id, $quantity = null, $valorvenda);
+
+    }
+    public function remove($id){
+
+        $item = ItemPedido::findOrFail($id);
+        $item -> delete();
+
+    }
+
+    public function email($id){
+
+        $pedido = Pedido::findOrFail($id);
+
+        Mail::send('pdf', ['pedido' => $pedido ], function($m){
+            $m->from('als2009f@gmail.com','André');
+            $m->to('smartcapinha@gmail.com');
+        });
 
     }
 
