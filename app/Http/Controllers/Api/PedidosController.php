@@ -73,18 +73,6 @@ class PedidosController extends Controller
         $pedido = Pedido::findOrFail($id);
         $pedido -> delete();
 
-        //$pedido = Pedido::findOrFail(1);
-        //$pedido->produtos()->attach(1,['nome'=>'nome']);
-
-        //$pedido->produtos()->attach(1,[quantidade => 1]);
-        //dd($pedido->produtos);
-
-        //foreach ($pedido->produtos as $produto){
-        //  echo "{$produto->pivot->created_at}{$produto->pivot->nome}<br>";
-        //}
-
-        //return Pedido::all();
-        //$produto -> update($request->all());
     }
 
     public function pdf($id){

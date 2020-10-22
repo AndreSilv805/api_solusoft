@@ -3,10 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Api\Cliente;
-use App\Api\Cor;
-use App\Api\Produto;
-use App\Api\Tamanho;
-use App\Api\Variation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

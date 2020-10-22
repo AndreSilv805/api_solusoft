@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>Document</title>
     <style>
-        h5 {
+        h4 {
             text-align: center;
         }
         table {
@@ -31,9 +31,15 @@
 </head>
 <body>
 
-<h5>Comprovante de Venda</h5>
-<h6>{{$pedido->cod_pedido}}</h6>
-<h6>Cliente:{{$pedido->cliente->nome}}</h6>
+<h4>Comprovante de Venda</h4>
+<h6>{{$pedido->cod_pedido}}</h6><br>
+
+@if ($pedido->cliente != null)
+    <h5>Dados do Cliente</h5>
+    <h6>{{$pedido->cliente->nome}}</h5>
+        <h6>cpf:{{$pedido->cliente->cpf}}</h5><br><br>
+@endif
+
 
 <table class="table">
 
