@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>Document</title>
     <style>
+        h5 {
+            text-align: center;
+        }
         table {
             border-collapse: collapse;
         }
@@ -28,8 +31,9 @@
 </head>
 <body>
 
-<h1>Itens da venda</h1>
-<h3>{{$pedido->cod_pedido}}</h3>
+<h5>Comprovante de Venda</h5>
+<h6>{{$pedido->cod_pedido}}</h6>
+<h6>Cliente:{{$pedido->cliente->nome}}</h6>
 
 <table class="table">
 
@@ -56,8 +60,6 @@
             <td style=" width:20%">R$ {{number_format($item->quantidade*$item->valor_vendido, 2, ',', '.')}}</td>
         </tr>
     @endforeach
-
-
 
 
 

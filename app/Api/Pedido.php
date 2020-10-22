@@ -8,7 +8,7 @@ class Pedido extends Model
 {
     protected $table = 'pedidos';
 
-    protected $with = ['produtos','items'];
+    protected $with = ['produtos','items', 'cliente'];
 
     protected $fillable = [
         'cliente_id', 'cod_pedido', 'obeservacao', 'forma_pagamento',
@@ -31,19 +31,6 @@ class Pedido extends Model
     public function removeProduct($product_id)
     {
         return $this->produtos()->detach($product_id);
-    }
-
-    public function addProduct($product_id, $quantity = null, $valorvenda)
-    {
-        if(!$this->products->contains($product_id)){
-            $quantity  = $quantity ?? 1;
-            $this->produtos()->attach($product_id, ['quantidade' => $quantity,'valor_vendido' => $valorvenda]);
-            return "Produto adicionado";
-        }
-        $product  = $this->produtos()->find($product_id);
-        $quantity = $quantity ? $quantity : $product->ped->quantidade + 1;
-        $this->produtos()->updateExistingPivot($product_id, ['quantidade' => $quantity,'valor_vendido' => $valorvenda]);
-        return "Quantidade atualizada";
     }
 
     public function produtos()

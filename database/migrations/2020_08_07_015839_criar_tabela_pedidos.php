@@ -16,13 +16,14 @@ class CriarTabelaPedidos extends Migration
         Schema::create('pedidos', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->unsignedInteger('cliente_id');
-            $table->string('cod_pedido')->unique();
-            $table->string('data_pedido');
-            $table->string('obeservacao');
-            $table->string('forma_pagamento');
-
+            $table->unsignedInteger('cliente_id')->nullable();
+            $table->string('cod_pedido')->unique()->nullable();
+            $table->dateTime('data_pedido')->nullable();
+            $table->string('obeservacao')->nullable();
+            $table->string('forma_pagamento')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
             $table->foreign('cliente_id')->references('id')->on('clientes');
 
         });

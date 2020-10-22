@@ -20,7 +20,9 @@ class CriarTabelaPedidoProduto extends Migration
             $table->unsignedInteger('produto');
 
             $table->string('cod_produto');
-            $table->integer('nome');
+            $table->string('nome');
+            $table->string('cor')->nullable();
+            $table->string('tamanho')->nullable();
             $table->integer('quantidade');
             $table->float('valor_vendido', 8, 2);
 

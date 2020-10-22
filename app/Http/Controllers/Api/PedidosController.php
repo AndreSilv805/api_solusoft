@@ -33,7 +33,8 @@ class PedidosController extends Controller
      */
     public function store(Request $request)
     {
-        Pedido::create();
+        $ped = Pedido::create();
+        return $ped;
     }
 
     /**
@@ -96,26 +97,17 @@ class PedidosController extends Controller
     public function adicionar(Request $request, $id){
 
         $pedido = Pedido::findOrFail($id);
-        /*$prod = [
-            'cod_produto' => $request->cod_produto,
-            'nome' => $request->nome,
-            'valor'=> $request->valor,
-            'cores'=> implode(",",$request->cores),
-            'tamanhos'=> implode(",",$request->tamanhos)
-        ];*/
+
         $prod = [
             'cod_produto' => $request->cod_produto,
-            'nome' => $request->nome,
+            'nome' => $request->nome."  ".$request->selecaocores."  ".$request->selecaotamanhos,
+            'cor' => $request->selecaocores,
+            'tamanho' => $request->selecaotamanhos,
             'quantidade' => $request->quantidade,
             'valor_vendido' => $request->valor
         ];
 
-        //$quantity  = $quantity ?? 1;
         $pedido->produtos()->attach($request->id,$prod);
-        //$pedido->produtos()->attach($request->id,['nome'=>$request->nome, 'quantidade' => $request->quantidade, 'valor_vendido' => $request->valor]);
-        //return "Produto adicionado";
-        //$pedido->addProduct($product_id, $quantity = null, $valorvenda);
-
     }
     public function remove($id){
 

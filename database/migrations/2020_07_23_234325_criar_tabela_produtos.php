@@ -19,10 +19,10 @@ class CriarTabelaProdutos extends Migration
             $table->string('cod_produto');
             $table->string('nome');
             $table->float('valor', 8, 2);
-            $table->string('cores');
-            $table->string('tamanhos');
-
+            $table->string('cores')->nullable();
+            $table->string('tamanhos')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
