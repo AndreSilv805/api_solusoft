@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>Document</title>
     <style>
-        h4 {
-            text-align: center;
-        }
         table {
             border-collapse: collapse;
         }
@@ -31,13 +28,14 @@
 </head>
 <body>
 
-<h4>Comprovante de Venda</h4>
-<h6>{{$pedido->cod_pedido}}</h6><br>
+
+<h2>Comprovante de Venda</h2>
+<h2>{{$pedido->created_at->format('d/m/Y')}}<h2><br>
 
 @if ($pedido->cliente != null)
     <h5>Dados do Cliente</h5>
-    <h6>{{$pedido->cliente->nome}}</h5>
-        <h6>cpf:{{$pedido->cliente->cpf}}</h5><br><br>
+    <p>{{$pedido->cliente->nome}}<br>
+    cpf:{{$pedido->cliente->cpf}}</p>
 @endif
 
 
@@ -56,7 +54,8 @@
     </thead>
 
     <tbody class="table table-striped table-sm table-bordered">
-    @foreach ($pedido->items as $item)
+    @inject('items', 'App\Api\Pedido')
+    @foreach ($items->findOrFail($pedido->id)->items as $item)
         <tr >
             <td style=" width:5%">1</td>
             <td style=" width:10%">{{$item->cod_produto}}</td>
@@ -65,12 +64,17 @@
             <td style=" width:15%">R$ {{number_format($item->valor_vendido, 2, ',', '.')}}</td>
             <td style=" width:20%">R$ {{number_format($item->quantidade*$item->valor_vendido, 2, ',', '.')}}</td>
         </tr>
+
     @endforeach
-
-
-
     </tbody>
-
 </table>
+        @inject('item2', 'App\Api\Pedido')
+
+        @php
+        $prods = $item2->findOrFail(1)->items;
+        $vendas = (array)$prods;
+        @endphp
+
+        <p>Observação do pedido:{{$pedido->obeservacao}}</p>
 </body>
 </html>

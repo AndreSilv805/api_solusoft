@@ -44,4 +44,45 @@ class Pedido extends Model
                     ->as('ped')
                     ;
     }
+
+    public function setIdAttribute($value)
+    {
+        $this->attributes['id']=$value;
+        $this->attributes['data_pedido']=$value;
+    }
+
+    public function setCreatedAtAttribute($value)
+    {
+        $this->attributes['created_at']=$value;
+        $this->attributes['data_pedido']=$value;
+    }
+
+
+    /*public function getCodPedidoAttribute()
+    {
+        return $this->id;
+    }*/
+
+    public function getDataPedidoAttribute()
+    {
+        return date('d/m/Y H:i');
+    }
+
+    public function total()
+    {
+        /*$produtos = [
+            ['id' => 1, 'nome' => 'Produto 01', 'valor_unitario' => 129.99],
+            ['id' => 2, 'nome' => 'Produto 02', 'valor_unitario' => 122.90],
+            ['id' => 3, 'nome' => 'Produto 03', 'valor_unitario' => 242.20]
+        ];*/
+
+        $prod = $this->findOrFail(1);
+        $produtos = $prod->items()->first;
+        $total2 = array_reduce($produtos, function($price, $produto) {
+            $price += $produto['valor_unitario'];
+            return $price;
+        });
+
+        echo $total2;
+    }
 }

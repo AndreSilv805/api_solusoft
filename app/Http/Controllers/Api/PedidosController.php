@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Api\Pedido;
 use App\Api\ItemPedido;
 
+use App\Mail\ComprovanteEmail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
@@ -33,6 +34,9 @@ class PedidosController extends Controller
      */
     public function store(Request $request)
     {
+        $prod = [
+            'cod_produto' => $request->cod_produto
+        ];
         $ped = Pedido::create();
         return $ped;
     }
@@ -57,9 +61,10 @@ class PedidosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $pedido = Pedido::findOrFail($id);
 
+        $pedido = Pedido::findOrFail($id);
         $pedido -> update($request->all());
+
     }
 
     /**
@@ -76,6 +81,7 @@ class PedidosController extends Controller
     }
 
     public function pdf($id){
+
         $pedido = Pedido::findOrFail($id);
         $pdf = PDF::loadView('pdf', compact('pedido'));
         return $pdf->setPaper('a4')->stream('teste pdf');
@@ -97,6 +103,7 @@ class PedidosController extends Controller
 
         $pedido->produtos()->attach($request->id,$prod);
     }
+
     public function remove($id){
 
         $item = ItemPedido::findOrFail($id);
@@ -108,10 +115,12 @@ class PedidosController extends Controller
 
         $pedido = Pedido::findOrFail($id);
 
-        Mail::send('pdf', ['pedido' => $pedido ], function($m){
+        /*Mail::send('pdf', ['pedido' => $pedido ], function($m){
             $m->from('als2009f@gmail.com','André');
             $m->to('smartcapinha@gmail.com');
-        });
+        });*/
+        Mail::send(new ComprovanteEmail($pedido));
+
 
     }
 

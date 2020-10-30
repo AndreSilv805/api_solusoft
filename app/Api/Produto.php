@@ -19,6 +19,8 @@ class Produto extends Model
         'created_at', 'updated_at', 'deleted_at'
     ];
 
+
+
     public function getCoresArrayAttribute()
     {
         return explode(",",$this->cores);
@@ -28,5 +30,6 @@ class Produto extends Model
     {
         return explode(",",$this->tamanhos);
     }
+
 
 }
