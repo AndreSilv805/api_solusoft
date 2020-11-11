@@ -13,8 +13,9 @@ class ClientesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         return Cliente::all();
     }
 
@@ -65,6 +66,31 @@ class ClientesController extends Controller
         $cliente = Cliente::findOrFail($id);
         $cliente -> delete();
     }
+
+    public function pesquisar(Request $request)
+    {
+        $search = function ($query) use($request) {
+
+            $termos = $request->only('nome','cpf');
+
+            foreach ($termos as $nome => $valor) {
+                if ($valor) {
+                    $query->where($nome, 'LIKE', '%' . $valor . '%');
+                }
+            }
+
+            $iguais = $request->only('cod_cliente');
+
+            foreach ($iguais as $nome => $valor) {
+                if ($valor) {
+                    $query->where($nome, '=', $valor);
+                }
+            }
+        };
+        return Cliente::where($search)->paginate(9);
+
+    }
+
 
 
 }

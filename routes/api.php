@@ -17,12 +17,15 @@ use Illuminate\Http\Request;
     return $request->user();
 });
 */
+Route::get('produtos-search', 'Api\ProdutosController@pesquisar');
 Route::get('produtos/cor', 'Api\ProdutosController@cores');
 Route::get('produtos/add', 'Api\ProdutosController@add');
 Route::apiResource('produtos', 'Api\ProdutosController');
 
+Route::get('clientes-search', 'Api\ClientesController@pesquisar');
 Route::apiResource('clientes', 'Api\ClientesController');
 
+Route::get('pedidos-search', 'Api\PedidosController@pesquisar');
 Route::put('pedidos/{id}/add', 'Api\PedidosController@adicionar');
 Route::delete('pedidos/remover/{id}', 'Api\PedidosController@remove');
 Route::get('pedidos/pdf/{id}', 'Api\PedidosController@pdf');

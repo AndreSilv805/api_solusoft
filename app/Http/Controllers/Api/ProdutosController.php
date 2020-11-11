@@ -18,12 +18,10 @@ class ProdutosController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    //response()->jason()  outra forma de retorna um json
 
 
+    public function index(Request $request){
 
-
-    public function index(){
 
         return Produto::all();
 
@@ -75,6 +73,30 @@ class ProdutosController extends Controller
     {
         $produto = Produto::findOrFail($id);
         $produto -> delete();
+    }
+
+    public function pesquisar(Request $request)
+    {
+        $search = function ($query) use($request) {
+
+            $termos = $request->only('nome');
+
+            foreach ($termos as $nome => $valor) {
+                if ($valor) {
+                    $query->where($nome, 'LIKE', '%' . $valor . '%');
+                }
+            }
+
+            $iguais = $request->only('cod_produto');
+
+            foreach ($iguais as $nome => $valor) {
+                if ($valor) {
+                    $query->where($nome, '=', $valor);
+                }
+            }
+        };
+        return Produto::where($search)->paginate(9);
+
     }
 
 }

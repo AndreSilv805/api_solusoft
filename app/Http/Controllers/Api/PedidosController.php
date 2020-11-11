@@ -20,10 +20,10 @@ class PedidosController extends Controller
      */
 
 
-    public function index()
+    public function index(Request $request)
     {
 
-        return Pedido::all();
+            return Pedido::all();
     }
 
     /**
@@ -121,6 +121,30 @@ class PedidosController extends Controller
         });*/
         Mail::send(new ComprovanteEmail($pedido));
 
+
+    }
+
+    public function pesquisar(Request $request)
+    {
+        $search = function ($query) use($request) {
+
+            $termos = $request->only('obeservacao','created_at');
+
+            foreach ($termos as $nome => $valor) {
+                if ($valor) {
+                    $query->where($nome, 'LIKE', '%' . $valor . '%');
+                }
+            }
+
+            $iguais = $request->only('id');
+
+            foreach ($iguais as $nome => $valor) {
+                if ($valor) {
+                    $query->where($nome, '=', $valor);
+                }
+            }
+        };
+        return Pedido::where($search)->paginate(9);
 
     }
 
