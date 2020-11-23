@@ -20,7 +20,7 @@ class ProdutosController extends Controller
 
 
 
-    public function index(Request $request){
+    public function index(){
 
 
         return Produto::all();
@@ -33,7 +33,7 @@ class ProdutosController extends Controller
         $produto = [
             'cod_produto' => $request->cod_produto,
             'nome' => $request->nome,
-            'valor'=> $request->valor,
+            'valor'=> str_replace(',', '.', $request->valor),
             'cores'=> implode(",",$request->cores),
             'tamanhos'=> implode(",",$request->tamanhos)
         ];
@@ -60,7 +60,7 @@ class ProdutosController extends Controller
         $prod = [
             'cod_produto' => $request->cod_produto,
             'nome' => $request->nome,
-            'valor'=> $request->valor,
+            'valor'=> str_replace(',', '.', $request->valor),
             'cores'=> implode(",",$request->cores),
             'tamanhos'=> implode(",",$request->tamanhos)
         ];
@@ -87,7 +87,7 @@ class ProdutosController extends Controller
                 }
             }
 
-            $iguais = $request->only('cod_produto');
+            $iguais = $request->only('cod_produto','valor');
 
             foreach ($iguais as $nome => $valor) {
                 if ($valor) {

@@ -83,7 +83,15 @@ class PedidosController extends Controller
     public function pdf($id){
 
         $pedido = Pedido::findOrFail($id);
-        $pdf = PDF::loadView('pdf', compact('pedido'));
+        $produtos = $pedido->items;
+        $total = 0;
+        foreach($produtos as $prod){
+                $total += $prod->quantidade*$prod->valor_vendido;
+        }
+        $numItem = 1;
+
+        $pdf = PDF::loadView('pdf', compact(['pedido','total','numItem']));
+        //return $pdf->setPaper('a4')->download('teste_pdf.pdf');
         return $pdf->setPaper('a4')->stream('teste pdf');
 
     }
@@ -147,7 +155,4 @@ class PedidosController extends Controller
         return Pedido::where($search)->paginate(9);
 
     }
-
-
-
 }
