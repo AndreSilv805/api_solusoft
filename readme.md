@@ -24,5 +24,10 @@ Para instalar esta aplicação.
 ## Configurar a conta de e-mail
 No arquivo .env
 ```
-axios.defaults.baseURL = 'substitua pelo endereço da api';
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=seu-email@gmail.com
+MAIL_PASSWORD=suasenha
+MAIL_ENCRYPTION=ssl
 ```
